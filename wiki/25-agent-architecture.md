@@ -95,9 +95,9 @@ detect → health → configure → launch → session → context
 | Codex / Claude Code | MindOS 拥有 detect / health / prompt bridge；外部 runtime 拥有 model、auth、permission、session、compact、execute |
 | ACP | MindOS 拥有 registry/detect 与 launch metadata；具体 adapter 拥有 auth、session、context window、execute |
 
-### MiniMax 文本模型与 Pi 序列化
+### MiniMax text models and Pi serialization
 
-MindOS 的 MiniMax 国际/国内预设默认使用 `MiniMax-M3.1-Flash`，普通模型列表依次提供 Flash、`MiniMax-M3`；已保存的旧模型和自定义 ID 不自动迁移。Web 与 standalone resolver 共用 `packages/mindos/src/agent/mindos-pi/minimax-model.ts`，为固定版本 Pi 补充 adaptive thinking 与空签名 thinking block 回放兼容配置。Flash 不支持关闭 thinking：普通 completion 省略 effort，使用服务端默认 max；agent 的 off 会由 Pi clamp 到 minimal（发送 low）。M3 仍支持关闭/开启 thinking。已验证的 OpenRouter 普通文本列表只保留返回的 `minimax/minimax-m3.1-flash:free` 和 `minimax/minimax-m3`，Flash 的网关限制依据已验证的 OpenRouter endpoint 元数据，不把直连 M3 限制套用到网关，也不修改自定义 endpoint。协议与 effort 依据 [MiniMax Anthropic API 文档](https://platform.minimax.io/docs/api-reference/text-anthropic-api.md)。
+The international and China-region MiniMax presets default to `MiniMax-M3.1-Flash`, with Flash followed by `MiniMax-M3` in the ordinary model list. Saved legacy models and custom IDs are not migrated automatically. The Web and standalone resolvers share `packages/mindos/src/agent/mindos-pi/minimax-model.ts`, which adds adaptive-thinking and empty-signature thinking-block replay compatibility for the pinned Pi release. Flash cannot disable thinking: ordinary completions omit effort and use the server-side default of max, while Pi clamps an agent-level off setting to minimal and sends low. M3 still supports both disabled and adaptive thinking. The verified OpenRouter ordinary-text list retains only the returned `minimax/minimax-m3.1-flash:free` and `minimax/minimax-m3` routes. Flash gateway limits come from verified OpenRouter endpoint metadata; direct M3 limits are not applied to the gateway, and custom endpoints remain unchanged. Protocol and effort behavior follow the [MiniMax Anthropic API documentation](https://platform.minimax.io/docs/api-reference/text-anthropic-api.md).
 
 ### Runtime Adapter Contract
 
